@@ -29,3 +29,86 @@ app.use("/api", apiRouter);
 app.listen(process.env.PORT, () => {
   console.log(`API listening on port ${process.env.PORT}`);
 });
+
+//---week1 homework---
+app.get("/my-route", (req, res) => {
+  res.send("Hi friend");
+});
+
+app.get("/future-meals", async (req, res) => {
+  try {
+    const futureMeals = await knex.raw(
+      "SELECT * FROM meal WHERE `when` > NOW() ORDER BY `when` ASC;"
+    );
+    res.json(futureMeals[0]);
+  } catch (error) {
+    console.error("Error fetching future meals:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+app.get("/past-meals", async (req, res) => {
+  try {
+    const pastMeals = await knex.raw(
+      "SELECT * FROM meal WHERE `when` < NOW() ORDER BY `when` ASC;"
+    );
+    res.json(pastMeals[0]);
+  } catch (error) {
+    console.error("Error fetching future meals:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+app.get("/all-meals", async (req, res) => {
+  try {
+    const [meals] = await knex.raw("SELECT * FROM meal");
+    if (meals.length === 0) {
+      return res.status(404).json({ error: "No meals found" });
+    }
+    res.json(meals);
+  } catch (error) {
+    console.error("Error fetching meals:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+app.get("/first-meal", async (req, res) => {
+  try {
+    const firstMeal = await knex.raw(
+      "SELECT * FROM meal ORDER BY id ASC LIMIT 1"
+    );
+    if (firstMeal[0].length === 0) {
+      return res.status(404).json({ error: "No meals found" });
+    }
+    res.json(firstMeal[0]);
+  } catch (error) {
+    console.error("Error fetching first meal:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+app.get("/last-meal", async (req, res) => {
+  try {
+    const lastMeal = await knex.raw(
+      "SELECT * FROM meal ORDER BY id DESC LIMIT 1"
+    );
+    if (lastMeal[0].length === 0) {
+      return res.status(404).json({ error: "No meals found" });
+    }
+    res.json(lastMeal[0]);
+  } catch (error) {
+    console.error("Error fetching last meal:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+//---week2 homework---
+import mealsRouter from "./routers/meals.js";
+import reservationsRouter from "./routers/reservations.js";
+
+app.use("/api", mealsRouter);
+app.use("/api", reservationsRouter);
+
+//---week3 homework---
+import reviewsRouter from "./routers/reviews.js";
+app.use("/api", reviewsRouter);
