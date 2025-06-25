@@ -1,0 +1,15 @@
+@use "@material/card";
+
+@include card.core-styles;
+
+.my-card-content{
+    padding: 16px;
+    background: linear-gradient(rgb(255, 224, 208), rgb(255, 199, 167));
+    border: 1px solid rgb(51, 0, 0);
+    border-radius: 25px;
+    width: 45%;
+}
+
+.additional_content{
+    font-size: 16px;
+}

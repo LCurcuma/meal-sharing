@@ -4,6 +4,7 @@
 
 import "./allMealsStyle.css";
 import { useState, useEffect } from 'react';
+import Card from "./Meal";
 
 export default function AllMeals(){
     const [meals, setMeals] = useState([]);
@@ -125,19 +126,11 @@ export default function AllMeals(){
             </select>
         </div>
         <h1>Meals</h1>
-        <ul>
+        <div className="container">
         {meals.map(meal => (
-            <li key={meal.id}>
-                <h2>{meal.id} {meal.title}</h2>
-                <p>{meal.description}</p>
-                <p>Location: {meal.location}</p>
-                <p>When: {meal.when}</p>
-                <p>Max reservations: {meal.max_reservations}</p>
-                <p>Price: {meal.price}</p>
-                <p>Created: {meal.created_date}</p>
-            </li>
+            <Card key={meal.id} id={meal.id} title={meal.title} description={meal.description} location={meal.location} when={meal.when} maxReservations={meal.max_reservations} price={meal.price} createdDate={meal.created_date}/>
         ))}
-        </ul>
+        </div>
         </>
     )
 }
