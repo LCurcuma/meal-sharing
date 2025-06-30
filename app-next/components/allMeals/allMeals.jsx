@@ -16,29 +16,14 @@ export default function AllMeals(){
 
     //doesn't work (doesn't update the meals list by filter)
     async function filtering(filter, filterValue){
-        if(filter === 'maxPrice'){
-            const data =
-               await fetch(`http://localhost:3001/api/meals?maxPrice=${filterValue}`)
-                .then(res => res.json());
+            if(filter && filterValue){
+            const data = await fetch(`http://localhost:3001/api/meals?${filter}=${filterValue}`)
+            .then(res => res.json());
             setMeals(data);
-            } else if(filter === 'title'){
-            useEffect(() => {
-                fetch(`http://localhost:3001/api/meals?title="${filterValue}"`)
-                .then(res => res.json())
-                .then(setMeals);
-            }, [])
-        } else if(filter === 'dateAfter'){
-                    useEffect(() => {
-                fetch(`http://localhost:3001/api/meals?dateAfter="${filterValue}"`)
-                .then(res => res.json())
-                .then(setMeals);
-            }, [])
-        } else if(filter === 'dateBefore'){
-                    useEffect(() => {
-                fetch(`http://localhost:3001/api/meals?dateBefore="${filterValue}"`)
-                .then(res => res.json())
-                .then(setMeals);
-            }, [])
+        }else{
+            const data = await fetch("http://localhost:3001/all-meals")
+            .then(res => res.json())
+            .then(setMeals);
         }
     }
 
@@ -47,6 +32,20 @@ export default function AllMeals(){
             .then(res => res.json())
             .then(setMeals);
         }, []);
+
+        //changed all if/else for filters to one useEffect
+        useEffect(() => {
+            fetch(`http://localhost:3001/api/meals?${filter}=${filterValue}`)
+            .then(res => res.json())
+            .then(setMeals);
+        }, [filtering]);
+
+        //changed all if/else for sortKey and sortDir
+        useEffect(() => {
+            fetch(`http://localhost:3001/api/meals?sortKey=${sortKey}&sortDir=${sortDir}`)
+            .then(res => res.json())
+            then(setMeals);
+        })
 
     function onSelectFilter(e){
         setFilter(e.target.value);
@@ -60,23 +59,6 @@ export default function AllMeals(){
     //doesn't work (also doesn't update the meals list)
     async function onSelectSortKey(e){
         setSortKey(e.target.value);
-        if(sortKey === 'when'){
-            const data = await fetch(`http://localhost:3001/api/meals?sortKey="when"`)
-            .then(res => res.json());
-            setMeals(data);
-        } else if(sortKey === 'max_reservations'){
-            const data = await fetch(`http://localhost:3001/api/meals?sortKey="max_reservations"`)
-            .then(res => res.json());
-            setMeals(data);
-        } else if(sortKey === 'price'){
-            const data = await fetch(`http://localhost:3001/api/meals?sortKey="price"`)
-            .then(res => res.json());
-            setMeals(data);
-        } else {
-            const data = await fetch("http://localhost:3001/all-meals")
-            .then(res => res.json());
-            setMeals(data);
-        }
     }
 
     function onSelectSortDir(e){
