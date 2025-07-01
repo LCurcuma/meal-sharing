@@ -3,8 +3,22 @@ import React, { useState } from "react";
 import './allMeals/allMealsStyle.css'
 
 export default function MealClient({ meal }) {
-    const [form, setForm] = useState({ contact_name: "", contact_email: "", contact_phonenumber: "", number_of_guests: "", created_date: Date.now() });
+    const [form, setForm] = useState({ contact_name: "", contact_email: "", contact_phonenumber: "", number_of_guests: "", created_date: formatDate(Date.now()) });
     const [submitting, setSubmitting] = useState(false);
+
+    function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) 
+        month = '0' + month;
+    if (day.length < 2) 
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+}
 
     function handleChange(e) {
         setForm({ ...form, [e.target.name]: e.target.value });
@@ -25,7 +39,7 @@ export default function MealClient({ meal }) {
             });
             if (res.ok) {
                 alert("Reservation successful!");
-                setForm({ contact_name: "", contact_email: "", contact_phonenumber: "", number_of_guests: "", created_date: Date.now() });
+                setForm({ contact_name: "", contact_email: "", contact_phonenumber: "", number_of_guests: "", created_date: formatDate(Date.now()) });
             } else {
                 alert("Reservation failed. Please try again.");
             }

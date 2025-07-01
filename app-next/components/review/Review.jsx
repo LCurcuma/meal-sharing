@@ -3,8 +3,22 @@ import React, { useState } from "react";
 import '../allMeals/allMealsStyle.css'
 
 export default function ReviewClient({ meal }) {
-    const [form, setForm] = useState({ title: "", description: "", stars: "", created_date: Date.now() });
+    const [form, setForm] = useState({ title: "", description: "", stars: "", created_date: formatDate(Date.now()) });
     const [submitting, setSubmitting] = useState(false);
+
+    function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) 
+        month = '0' + month;
+    if (day.length < 2) 
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+}
 
     function handleChange(e) {
         setForm({ ...form, [e.target.name]: e.target.value });
@@ -25,7 +39,7 @@ export default function ReviewClient({ meal }) {
             });
             if (res.ok) {
                 alert("Review sent!");
-                setForm({ title: "", description: "", stars: "", created_date: Date.now() });
+                setForm({ title: "", description: "", stars: "", created_date: formatDate(Date.new()) });
             } else {
                 alert("Sending review failed. Please try again.");
             }
