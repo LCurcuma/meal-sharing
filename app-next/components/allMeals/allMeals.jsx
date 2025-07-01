@@ -44,8 +44,8 @@ export default function AllMeals(){
         useEffect(() => {
             fetch(`http://localhost:3001/api/meals?sortKey=${sortKey}&sortDir=${sortDir}`)
             .then(res => res.json())
-            then(setMeals);
-        })
+            .then(setMeals);
+        }, [])
 
     function onSelectFilter(e){
         setFilter(e.target.value);
@@ -109,7 +109,7 @@ export default function AllMeals(){
         </div>
         <h1>Meals</h1>
         <div className="container">
-        {meals.map(meal => (
+        {(Array.isArray(meals) ? meals : [])?.map(meal => (
             <Card key={meal.id} id={meal.id} title={meal.title} description={meal.description} location={meal.location} when={meal.when} maxReservations={meal.max_reservations} price={meal.price} createdDate={meal.created_date}/>
         ))}
         </div>

@@ -3,6 +3,8 @@
 import "./allMealsStyle.css";
 import "./styles.scss";
 import React, { useState } from "react";
+import { usePathname } from "next/navigation";
+
 
 export default function Card({id, title, description, location, when, maxReservations, price, createdDate}){
 
@@ -25,6 +27,8 @@ export default function Card({id, title, description, location, when, maxReserva
                 <p>Max reservations: {maxReservations}</p>
                 <p>Price: {price}</p>
                 <p>Created: {createdDate}</p>
+                <a href={usePathname()+'/'+id}><button>Reserv meal</button></a>
+                <a href={usePathname()+'/review/'+id}><button>Review meal</button></a>
                 </div>
                 )}
             </div>
