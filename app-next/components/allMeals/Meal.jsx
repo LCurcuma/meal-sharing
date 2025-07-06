@@ -29,7 +29,7 @@ export default function Card({id, title, description, location, when, maxReserva
                 <p>Price: {price}</p>
                 <p>Created: {createdDate}</p>
                 <Link href={'/'+id}><button>Reserv meal</button></Link>
-                <Link href={usePathname()+'/review/'+id}><button>Review meal</button></Link>
+                <Link href={'/review/'+id}><button>Review meal</button></Link>
                 </div>
                 )}
             </div>
