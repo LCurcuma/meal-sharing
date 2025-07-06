@@ -4,12 +4,12 @@
 
 import "./allMealsStyle.css";
 import { useState, useEffect } from 'react';
-import Card from "./Meal";
-import { usePathname } from "next/navigation";
+import Card from "./MealMain";
+import Link from "next/link";
 
 export default function AllMeals(){
     const [meals, setMeals] = useState([]);
-    const pathname = usePathname()+'meals';
+    const pathname = '/meals';
 
     //doesn't work (doesn't update the meals list by filter)
 
@@ -29,7 +29,7 @@ export default function AllMeals(){
         ))}
         </div>
         <div className="buttonContainer">
-        <a href={pathname}><button>All meals</button></a>
+        <Link href={pathname}><button>All meals</button></Link>
         </div>
         </>
     )

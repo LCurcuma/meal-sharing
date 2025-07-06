@@ -1,4 +1,4 @@
-import HomePage from "@/components/AllMeals/main";
+import HomePage from "../components/AllMeals/main";
 
 export default function Home() {
   return (

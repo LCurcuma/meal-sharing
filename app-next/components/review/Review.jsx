@@ -1,28 +1,14 @@
 "use client";
 import React, { useState } from "react";
 import '../allMeals/allMealsStyle.css'
+import formatDate from "@/utils/formatData";
 
 export default function ReviewClient({ meal }) {
     const [form, setForm] = useState({ title: "", description: "", stars: "", created_date: formatDate(Date.now()) });
     const [submitting, setSubmitting] = useState(false);
 
-    function formatDate(date) {
-    var d = new Date(date),
-        month = '' + (d.getMonth() + 1),
-        day = '' + d.getDate(),
-        year = d.getFullYear();
-
-    if (month.length < 2) 
-        month = '0' + month;
-    if (day.length < 2) 
-        day = '0' + day;
-
-    return [year, month, day].join('-');
-}
-
     function handleChange(e) {
         setForm({ ...form, [e.target.name]: e.target.value });
-        console.log(form);
     }
 
     async function handleSubmit(e) {
