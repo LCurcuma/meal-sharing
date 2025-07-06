@@ -10,7 +10,8 @@ export async function generateStaticParams() {
 
 export default async function MealPage({ params }) {
     // Fetch meal data on the server
-    const res = await fetch(`http://localhost:3001/api/meals/id=${params.id}`);
+    const meal_id = await params;
+    const res = await fetch(`http://localhost:3001/api/meals/id=${meal_id.id}`);
     const meal = await res.json();
 
     return <MealClient meal={meal} />;
