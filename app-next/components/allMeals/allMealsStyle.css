@@ -1,5 +1,152 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-.buttonsLeft{
+header{
+    position: sticky;
+    z-index: 1;
+    top: 0;
+    width: 100%;
+    background-color: #FFB3B3;
+    height: 100px;
+    color: white;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+@font-face {
+    font-family: "mainFont";
+    src: url("AnnieUseYourTelescope-Regular.ttf");
+}
+
+.header_text{
+    margin-left: 50px;
+    font-family: "mainFont";
+    font-size: 40px;
+    cursor: default;
+}
+
+body{
+    background-color: #FFDBA4; 
+}
+
+h1{
+    color: white;
+    font-family: "mainFont";
+    text-align: center;
+    font-size: 100px;
+    margin-top: 150px;
+    margin-bottom: 210px;
+    cursor: default;
+}
+
+.btn_go{
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
+    height: 100px;
+    width: 250px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 25px;
+    background-color: #FFE9AE;
+    border: transparent;
+    cursor: pointer;
+    color: #742300;
+    font-size: 25px;
+    font-weight: 600;
+font-family: "mainFont";
+}
+
+.btn_back{
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 50px;
+    height: 100px;
+    width: 250px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 25px;
+    background-color: #FFE9AE;
+    border: transparent;
+    cursor: pointer;
+    color: #742300;
+    font-size: 25px;
+    font-weight: 600;
+font-family: "mainFont";
+}
+
+.btn_go:hover{
+    background-color: #ffedbb;
+}
+
+.btn_back:hover{
+    background-color: #ffedbb;
+}
+
+.no_decoration{
+    text-decoration: none;
+}
+
+.no_decoration:hover{
+    text-decoration: underline;
+}
+
+.buttonContainer{
+display:flex;
+justify-content: center;
+margin-top: 50px;
+margin-bottom: 50px;
+}
+
+footer{
+    padding-left: 70px;
+    padding-bottom: 25px;
+    background-color: #C1EFFF;
+    color: #5f5abd;
+    padding-top: 50px;
+    font-size: 30px;
+    font-family: "mainFont";
+}
+
+.footer_without_content{
+    height: 200px;
+}
+
+.no_reservations{
+    font-size: 30px;
+    font-family: "mainFont";
+    color: #742300;
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.input_reservation{
+    height: 70px;
+}
+
+/* body{
+    background-color: #FFDBA4;
+    color: rgb(51, 0, 0);
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 20px;
+    margin: auto;
+} */
+
+/* .buttonsLeft{
     margin-top: 50px;
     margin-right: 15px;
     display: flex;
@@ -8,23 +155,14 @@
     gap: 20px;
 }
 
-body{
-    background-color: rgb(255, 190, 152);
-    color: rgb(51, 0, 0);
-    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    font-size: 20px;
-    width: 80%;
-    margin: auto;
-}
-
 button{
-    width: 150px;
-    height: 60px;
+    width: 120px;
+    height: 32px;
     border-radius: 25px;
     border: 2px solid rgb(51, 0, 0);
     background-color: rgb(255, 199, 167);
     color: rgb(51, 0, 0);
-    font-weight: 700;
+    font-weight: 600;
     cursor: pointer;
 }
 
@@ -48,6 +186,7 @@ input{
     width: 200px;
     text-align: center;
     margin-right: 20px;
+    margin-top: 50px;
     border: 2px solid rgb(51, 0, 0);
     font-weight: 600;
 }
@@ -89,4 +228,4 @@ li{
 .containerForCards{
     display: flex;
     flex-flow: column;
-}
+} */

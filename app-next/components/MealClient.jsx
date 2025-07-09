@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import './allMeals/allMealsStyle.css'
 import formatDate from "@/utils/formatData";
+import Card from "./allMeals/MealReservation";
+import Link from "next/link";
 
 export default function MealClient({ meal }) {
     const [form, setForm] = useState({ contact_name: "", contact_email: "", contact_phonenumber: "", number_of_guests: "", created_date: formatDate(Date.now()) });
@@ -39,15 +41,12 @@ export default function MealClient({ meal }) {
         meal.max_reservations - (meal.reservations_count || 0);
 
     return (
-        <div>
-            <h2>{meal.title}</h2>
-            <p>{meal.description}</p>
-            <p>Location: {meal.location}</p>
-            <p>Date: {meal.when}</p>
-            <p>
-                Available reservations:{" "}
-                {availableReservations > 0 ? availableReservations : 0}
-            </p>
+        <>
+        <header>
+            <a className="header_text">Meal-sharing project</a>
+        </header>
+        <main>
+            <Card key={meal.id} id={meal.id} title={meal.title} description={meal.description} location={meal.location} when={meal.when} maxReservations={meal.max_reservations} price={meal.price} createdDate={meal.created_date} availableReservations={meal.available_reservations} imageURL={meal.image_url}/>
             {availableReservations > 0 ? (
                 <form onSubmit={handleSubmit}>
                     <input
@@ -56,6 +55,7 @@ export default function MealClient({ meal }) {
                         placeholder="Name"
                         value={form.contact_name}
                         onChange={handleChange}
+                        className="input_reservation"
                         required
                     />
                     <input
@@ -64,6 +64,7 @@ export default function MealClient({ meal }) {
                         placeholder="Email"
                         value={form.contact_email}
                         onChange={handleChange}
+                        className="input_reservation"
                         required
                     />
                     <input
@@ -72,6 +73,7 @@ export default function MealClient({ meal }) {
                         placeholder="Phone number"
                         value={form.contact_phonenumber}
                         onChange={handleChange}
+                        className="input_reservation"
                         required
                     />
                     <input
@@ -80,15 +82,22 @@ export default function MealClient({ meal }) {
                     placeholder="Number of guests"
                     value={form.number_of_guests}
                     onChange={handleChange}
+                        className="input_reservation"
                     required
                     />
-                    <button type="submit" disabled={submitting}>
-                        {submitting ? "Booking..." : "Book seat"}
+                    <button className="btn_go" type="submit" disabled={submitting}>
+                        {submitting ? "Booking..." : "Book meal"}
                     </button>
+                    <Link href="/meals"><button className="btn_back">Back</button></Link>
                 </form>
             ) : (
-                <div>No available reservations for this meal.</div>
+                <>
+                <div className="no_reservations">No available reservations for this meal.</div>
+                    <Link href="/meals" className="no_decoration"><button className="btn_go">Back</button></Link>
+                </>
             )}
-        </div>
+        </main>
+        <footer className="footer_without_content"></footer>
+        </>
     );
 }

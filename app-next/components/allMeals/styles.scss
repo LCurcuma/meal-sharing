@@ -1,15 +1,160 @@
-@use "@material/card";
-
-@include card.core-styles;
+@font-face {
+    font-family: "mainFont";
+    src: url("AnnieUseYourTelescope-Regular.ttf");
+}
 
 .my-card-content{
-    padding: 16px;
-    background: linear-gradient(rgb(255, 224, 208), rgb(255, 199, 167));
-    border: 1px solid rgb(51, 0, 0);
-    border-radius: 25px;
-    width: 45%;
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 50px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-color: #FFE9AE;
+    border: 1px solid #FFDBA4;
+    color: #742300;
+    font-family: "mainFont";
+    cursor: pointer;
+    box-shadow: 10px 5px 5px rgba(34, 1, 1, 0.279);
+}
+
+.images-plus-description{
+    display: flex;
+    flex-direction: row;
+    margin-top: 30px;
+    background-color: #ffdaa5;
+    border-bottom-right-radius: 50px;
+}
+
+img{
+    width: 400px;
+    aspect-ratio: 2/1;
+    object-fit: cover;
+    border-bottom-left-radius: 50px;
+}
+
+.main_content{
+    align-self: flex-end;
+    margin-right: 50px;
+    margin-left: 50px;
+    margin-bottom: 50px;
+    margin-top: 25px;
+    font-size: 25px;
+}
+
+.availableReservations{
+    display: flex;
+    margin-left: 78%;
+    margin-top: 25px;
+    font-weight: 600;
+    font-size: 30px;
+}
+
+.availableReservationsContainer{
+    display: flex;
+    width: 100%;
 }
 
 .additional_content{
-    font-size: 16px;
+    margin-top: 20px;
 }
+
+.btn{
+    display: flex;
+    margin-top: 30px;
+    height: 40px;
+    width: 200px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 25px;
+    background-color: #FFE9AE;
+    border: transparent;
+    cursor: pointer;
+    color: #742300;
+    font-family: "mainFont";
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.btn:hover{
+    background-color: #ffedbb;
+}
+
+.btns{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.no_decoration{
+    text-decoration: none;
+}
+
+.no_decoration:hover{
+    text-decoration: underline;
+}
+
+.input_field{
+    display: flex;
+    gap: 25px;
+    margin-left: 5%;
+    margin-bottom: 50px;
+}
+
+input{
+    font-size: 20px;
+    text-align: center;
+    width: 500px;
+    height: 40px;
+    border-radius: 20px;
+    font-family: "mainFont";
+    font-weight: 600;
+    background-color: #ffedbb;
+    color: #742300;
+    border: 1px solid #ffdaa5;
+}
+
+select{
+    font-size: 20px;
+    text-align: center;
+    width: 250px;
+    height: 40px;
+    border-radius: 20px;
+    font-family: "mainFont";
+    font-weight: 600;
+    background-color: #ffedbb;
+    color: #742300;
+    border: 1px solid #ffdaa5;
+}
+
+.direction{
+        font-size: 20px;
+    text-align: center;
+    width: 250px;
+    height: 40px;
+    border-radius: 20px;
+    font-family: "mainFont";
+    font-weight: 600;
+    background-color: #ffedbb;
+    color: #742300;
+    border: 1px solid #ffdaa5;
+}
+
+// .my-card-content{
+//     padding: 16px;
+//     background: #FFE9AE;
+//     border-radius: 25px;
+//     width: 100%;
+//     box-shadow: inset;
+// }
+
+// .additional_content{
+//     font-size: 16px;
+// }
+
+// .availableReservations{
+//     text-align: right;
+//     font-size: 15px;
+// }
