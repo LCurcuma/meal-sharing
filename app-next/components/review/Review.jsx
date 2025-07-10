@@ -50,6 +50,7 @@ export default function ReviewClient({ meal }) {
                         name="title"
                         placeholder="Title"
                         value={form.title}
+                        className="input_reservation"
                         onChange={handleChange}
                         required
                     />
@@ -58,6 +59,7 @@ export default function ReviewClient({ meal }) {
                         name="description"
                         placeholder="Description"
                         value={form.description}
+                        className="input_reservation"
                         onChange={handleChange}
                         required
                     />
@@ -66,6 +68,7 @@ export default function ReviewClient({ meal }) {
                         name="stars"
                         placeholder="Stars (from 1 to 5)"
                         value={form.stars}
+                        className="input_reservation"
                         onChange={handleChange}
                         required
                     />
