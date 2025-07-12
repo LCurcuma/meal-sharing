@@ -1,7 +1,7 @@
-import HomePage from "../components/AllMeals/main.jsx";
+import AllMeals from "@/components/allMeals/allMeals";
 
 export default function Home() {
   return (
-    <HomePage />
+    <AllMeals />
   );
 }
