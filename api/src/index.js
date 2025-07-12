@@ -38,7 +38,7 @@ app.get("/my-route", (req, res) => {
 app.get("/future-meals", async (req, res) => {
   try {
     const futureMeals = await knex.raw(
-      "SELECT * FROM meal WHERE `when` > NOW() ORDER BY `when` ASC;"
+      "SELECT * FROM _meal WHERE `when` > NOW() ORDER BY `when` ASC;"
     );
     res.json(futureMeals[0]);
   } catch (error) {
@@ -50,7 +50,7 @@ app.get("/future-meals", async (req, res) => {
 app.get("/past-meals", async (req, res) => {
   try {
     const pastMeals = await knex.raw(
-      "SELECT * FROM meal WHERE `when` < NOW() ORDER BY `when` ASC;"
+      "SELECT * FROM _meal WHERE `when` < NOW() ORDER BY `when` ASC;"
     );
     res.json(pastMeals[0]);
   } catch (error) {
@@ -61,7 +61,7 @@ app.get("/past-meals", async (req, res) => {
 
 app.get("/all-meals", async (req, res) => {
   try {
-    const [meals] = await knex.raw("SELECT meal.id, meal.title, meal.description, meal.location, meal.when, meal.max_reservations, meal.price, meal.created_date, COALESCE(meal.max_reservations - SUM(reservation.number_of_guests), meal.max_reservations) AS available_reservations, image_url FROM meal LEFT JOIN reservation ON meal.id=reservation.meal_id GROUP BY meal.id ORDER BY meal.id ASC");
+    const [meals] = await knex.raw("SELECT _meal.id, _meal.title, _meal.description, _meal.location, _meal.when, _meal.max_reservations, _meal.price, _meal.created_date, COALESCE(_meal.max_reservations - SUM(_reservation.number_of_guests), _meal.max_reservations) AS available_reservations, _meal.image_url FROM _meal LEFT JOIN _reservation ON _meal.id=reservation.meal_id GROUP BY _meal.id ORDER BY _meal.id ASC");
     if (meals.length === 0) {
       return res.status(404).json({ error: "No meals found" });
     }
@@ -75,7 +75,7 @@ app.get("/all-meals", async (req, res) => {
 app.get("/first-meal", async (req, res) => {
   try {
     const firstMeal = await knex.raw(
-      "SELECT * FROM meal ORDER BY id ASC LIMIT 1"
+      "SELECT * FROM _meal ORDER BY id ASC LIMIT 1"
     );
     if (firstMeal[0].length === 0) {
       return res.status(404).json({ error: "No meals found" });
@@ -90,7 +90,7 @@ app.get("/first-meal", async (req, res) => {
 app.get("/last-meal", async (req, res) => {
   try {
     const lastMeal = await knex.raw(
-      "SELECT * FROM meal ORDER BY id DESC LIMIT 1"
+      "SELECT * FROM _meal ORDER BY id DESC LIMIT 1"
     );
     if (lastMeal[0].length === 0) {
       return res.status(404).json({ error: "No meals found" });

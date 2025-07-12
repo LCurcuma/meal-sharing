@@ -18,7 +18,7 @@ reservationsRouter.use(
 reservationsRouter.get("/reservations", async (req, res) => {
   try {
     const reservations = await knex.raw(
-      "SELECT * FROM reservation ORDER BY id ASC;"
+      "SELECT * FROM _reservation ORDER BY id ASC;"
     );
     if (reservations[0].length === 0) {
       return res.status(404).json({ error: "No reservations found" });
@@ -34,7 +34,7 @@ reservationsRouter.post("/reservations", async (req, res) => {
   try {
     const reservation = req.body;
     console.log("Received reservation data:", reservation);
-    const addedReservation = await knex.table("reservation").insert({
+    const addedReservation = await knex.table("_reservation").insert({
       number_of_guests: reservation.number_of_guests,
       meal_id: reservation.meal_id,
       created_date: reservation.created_date,
@@ -53,7 +53,7 @@ reservationsRouter.get("/reservations/:id", async (req, res) => {
   const reservationId = req.params.id;
   try {
     const reservation = await knex.raw(
-      `SELECT * FROM reservation WHERE id = ${reservationId};`
+      `SELECT * FROM _reservation WHERE id = ${reservationId};`
     );
     if (reservation[0].length === 0) {
       return res.status(404).json({ error: "Reservation not found" });
@@ -69,7 +69,7 @@ reservationsRouter.put("/reservations/:id", async (req, res) => {
   const reservationId = req.params.id;
   const updatedReservation = req.body;
   try {
-    const result = await knex("reservation")
+    const result = await knex("_reservation")
       .where({ id: reservationId })
       .update({
         number_of_guests: updatedReservation.number_of_guests,
@@ -93,7 +93,7 @@ reservationsRouter.put("/reservations/:id", async (req, res) => {
 reservationsRouter.delete("/reservations/:id", async (req, res) => {
   const reservationId = req.params.id;
   try {
-    const result = await knex("reservation").where({ id: reservationId }).del();
+    const result = await knex("_reservation").where({ id: reservationId }).del();
     if (result === 0) {
       return res.status(404).json({ error: "Reservation not found" });
     }
