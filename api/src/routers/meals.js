@@ -16,7 +16,7 @@ mealsRouter.use(
 
 mealsRouter.get("/meals", async (req, res) => {
   try {
-    const meals = await knex.raw("SELECT * FROM meal ORDER BY id ASC;");
+    const meals = await knex.raw("SELECT meal.id, meal.title, meal.description, meal.location, meal.when, meal.max_reservations, meal.price, meal.created_date, COALESCE(meal.max_reservations - SUM(reservation.number_of_guests), meal.max_reservations) AS available_reservations, image_url FROM meal LEFT JOIN reservation ON meal.id=reservation.meal_id GROUP BY meal.id ORDER BY meal.id ASC");
     if (meals[0].length === 0) {
       return res.status(404).json({ error: "No meals found" });
     }
@@ -74,7 +74,7 @@ mealsRouter.get("/meals", async (req, res) => {
         return res.status(400).json({ error: "Invalid title parameter" });
       }
       const mealsByTitle = await knex.raw(
-        `SELECT * FROM meal WHERE LOWER(title) LIKE '%${title}%' ORDER BY id ASC;`
+        `SELECT meal.id, meal.title, meal.description, meal.location, meal.when, meal.max_reservations, meal.price, meal.created_date, COALESCE(meal.max_reservations - SUM(reservation.number_of_guests), meal.max_reservations) AS available_reservations, image_url FROM meal LEFT JOIN reservation ON meal.id=reservation.meal_id WHERE LOWER(title) LIKE '%${title}%' GROUP BY meal.id ORDER BY meal.id ASC;`
       );
       if (mealsByTitle[0].length === 0) {
         return res
@@ -116,7 +116,7 @@ mealsRouter.get("/meals", async (req, res) => {
         return res.status(400).json({ error: "Invalid limit parameter" });
       }
       const limitedMeals = await knex.raw(
-        `SELECT * FROM meal ORDER BY id ASC LIMIT ${limit};`
+        `SELECT meal.id, meal.title, meal.description, meal.location, meal.when, meal.max_reservations, meal.price, meal.created_date, COALESCE(meal.max_reservations - SUM(reservation.number_of_guests), meal.max_reservations) AS available_reservations, image_url FROM meal LEFT JOIN reservation ON meal.id=reservation.meal_id GROUP BY meal.id ORDER BY meal.id ASC LIMIT ${limit};`
       );
       if (limitedMeals[0].length === 0) {
         return res.status(404).json({ error: "No meals found" });
@@ -124,7 +124,7 @@ mealsRouter.get("/meals", async (req, res) => {
       return res.json(limitedMeals[0]);
     } else if ("sortKey" in req.query) {
       const sortKey = req.query.sortKey.toString().toLowerCase();
-      const validSortKeys = ["when", "max_reservations", "price"];
+      const validSortKeys = ["`when`", "max_reservations", "price"];
       if (!validSortKeys.includes(sortKey)) {
         return res.status(400).json({ error: "Invalid sortKey parameter" });
       }
@@ -134,12 +134,13 @@ mealsRouter.get("/meals", async (req, res) => {
           return res.status(400).json({ error: "Invalid sortDir parameter" });
         }
         const sortedMeals = await knex.raw(
-          `SELECT * FROM meal ORDER BY ${sortKey} ${req.query.sortDir.toUpperCase()};`
+          `SELECT meal.id, meal.title, meal.description, meal.location, meal.when, meal.max_reservations, meal.price, meal.created_date, COALESCE(meal.max_reservations - SUM(reservation.number_of_guests), meal.max_reservations) AS available_reservations, image_url FROM meal LEFT JOIN reservation ON meal.id=reservation.meal_id GROUP BY meal.id ORDER BY ${sortKey} ${req.query.sortDir.toUpperCase()};`
         );
         return res.json(sortedMeals[0]);
       }
       const sortedMeals = await knex.raw(
-        `SELECT * FROM meal ORDER BY ${sortKey} ASC;`
+        `SELECT meal.id, meal.title, meal.description, meal.location, meal.when, meal.max_reservations, meal.price, meal.created_date, COALESCE(meal.max_reservations - SUM(reservation.number_of_guests), meal.max_reservations) AS available_reservations, image_url FROM meal LEFT JOIN reservation ON meal.id=reservation.meal_id GROUP BY meal.id ORDER BY ${sortKey} ASC;`
+
       );
       if (sortedMeals[0].length === 0) {
         return res.status(404).json({ error: "No meals found" });
@@ -166,6 +167,7 @@ mealsRouter.post("/meals", async (req, res) => {
       max_reservations: meal.max_reservations,
       price: meal.price,
       created_date: meal.created_date,
+      image_url: meal.image_url,
     });
     res.status(201).send("meal created successfully");
   } catch (error) {
@@ -177,7 +179,7 @@ mealsRouter.post("/meals", async (req, res) => {
 mealsRouter.get("/meals/:id", async (req, res) => {
   const mealId = req.params.id;
   try {
-    const meal = await knex.raw(`SELECT * FROM meal WHERE id = ${mealId};`);
+    const meal = await knex.raw(`SELECT meal.id, meal.title, meal.description, meal.location, meal.when, meal.max_reservations, meal.price, meal.created_date, COALESCE(meal.max_reservations - SUM(reservation.number_of_guests), meal.max_reservations) AS available_reservations, image_url FROM meal LEFT JOIN reservation ON meal.id=reservation.meal_id WHERE meal.id=${mealId} GROUP BY meal.id `);
     if (meal[0].length === 0) {
       return res.status(404).json({ error: "Meal not found" });
     }

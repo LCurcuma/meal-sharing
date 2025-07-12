@@ -16,7 +16,7 @@ export default function Card({id, title, description, location, when, maxReserva
     
     return (
         <div className="my-card-content" onClick={showAll}>
-            <div className="availableReservationsContainer">
+            <div className="availableReservationsContainer" >
                 <p className="availableReservations">Available reservations: {availableReservations}</p>
                 </div>
                 <div className="images-plus-description">
