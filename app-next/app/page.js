@@ -1,7 +1,7 @@
-import AllMeals from "@/components/allMeals/allMeals";
+import Main from "@/components/allMeals/main";
 
 export default function Home() {
   return (
-    <AllMeals />
+    <Main />
   );
 }

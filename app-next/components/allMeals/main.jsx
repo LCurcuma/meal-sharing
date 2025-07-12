@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react';
 import Card from "./MealMain";
 import Link from "next/link";
 
-export default function AllMeals(){
+export default function Main(){
     const [meals, setMeals] = useState([]);
     const pathname = '/meals';
 
