@@ -85,6 +85,11 @@ CREATE TABLE public._review (
 
 ALTER TABLE public._review OWNER TO rebasedata;
 
+
+ALTER TABLE _reservation
+ALTER COLUMN number_of_guests TYPE INTEGER
+USING number_of_guests::integer;
+
 --
 -- Data for Name: _meal; Type: TABLE DATA; Schema: public; Owner: rebasedata
 --
@@ -125,4 +130,3 @@ COPY public._review (id, title, description, meal_id, stars, created_date) FROM 
 --
 -- PostgreSQL database dump complete
 --
-

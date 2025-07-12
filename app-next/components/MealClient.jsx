@@ -6,7 +6,7 @@ import Card from "./allMeals/MealReservation";
 import Link from "next/link";
 
 export default function MealClient({ meal }) {
-    const [form, setForm] = useState({ contact_name: "", contact_email: "", contact_phonenumber: "", number_of_guests: "", created_date: formatDate(Date.now()) });
+    const [form, setForm] = useState({ contact_name: "", contact_email: "", contact_phonenumber: "", number_of_guests: "", created_date: formatDate(Date.now()) + ' 00:00:00' });
     const [submitting, setSubmitting] = useState(false);
 
     function handleChange(e) {
@@ -17,17 +17,18 @@ export default function MealClient({ meal }) {
         e.preventDefault();
         setSubmitting(true);
         try {
-            const res = await fetch("http://localhost:3001/api/reservations", {
+            const res = await fetch("https://meal-sharing-0uag.onrender.com/api/reservations", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     meal_id: meal.id,
                     ...form,
+                    number_of_guests: parseInt(form.number_of_guests, 10),
                 }),
             });
             if (res.ok) {
                 alert("Reservation successful!");
-                setForm({ contact_name: "", contact_email: "", contact_phonenumber: "", number_of_guests: "", created_date: formatDate(Date.now()) });
+                setForm({ contact_name: "", contact_email: "", contact_phonenumber: "", number_of_guests: "", created_date: formatDate(Date.now())+ ' 00:00:00' });
             } else {
                 alert("Reservation failed. Please try again.");
             }
@@ -77,7 +78,7 @@ export default function MealClient({ meal }) {
                         required
                     />
                     <input
-                    type="text"
+                    type="number"
                     name="number_of_guests"
                     placeholder="Number of guests"
                     value={form.number_of_guests}

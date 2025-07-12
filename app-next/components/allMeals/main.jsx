@@ -14,7 +14,7 @@ export default function AllMeals(){
     //doesn't work (doesn't update the meals list by filter)
 
         useEffect(() => {
-            fetch("http://localhost:3001/api/meals?limit=3")
+            fetch("https://meal-sharing-0uag.onrender.com/api/meals?limit=3")
             .then(res => res.json())
             .then(setMeals);
         }, []);

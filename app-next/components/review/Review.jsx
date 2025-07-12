@@ -17,7 +17,7 @@ export default function ReviewClient({ meal }) {
         e.preventDefault();
         setSubmitting(true);
         try {
-            const res = await fetch("http://localhost:3001/api/reviews", {
+            const res = await fetch("https://meal-sharing-0uag.onrender.com/api/reviews", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({

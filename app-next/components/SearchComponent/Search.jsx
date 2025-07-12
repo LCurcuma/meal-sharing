@@ -7,7 +7,7 @@ export default function Search(){
     const [meals, setMeals] = useState();
 
     useEffect(() => {
-        fetch(`http://localhost:3001/api/meals?title=${title}`)
+        fetch(`https://meal-sharing-0uag.onrender.com/api/meals?title=${title}`)
         .then(data => data.json())
         .then(setMeals);
     }, [handleChange])

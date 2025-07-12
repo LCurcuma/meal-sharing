@@ -18,15 +18,15 @@ export default function AllMeals(){
 
         if(key === ""){
             if(title === "" ){
-                url = 'http://localhost:3001/all-meals';
+                url = 'https://meal-sharing-0uag.onrender.com/all-meals';
             } else {
-                url = `http://localhost:3001/api/meals?title=${title}`;
+                url = `https://meal-sharing-0uag.onrender.com/api/meals?title=${title}`;
             }
         } else {
             if(title === ""){
-                url = `http://localhost:3001/api/meals?sortKey=${key}&sortDir=${direction}`;
+                url = `https://meal-sharing-0uag.onrender.com/api/meals?sortKey=${key}&sortDir=${direction}`;
             } else {
-                url = `http://localhost:3001/api/meals?title=${title}&sortKey=${key}&sortDir=${direction}`;
+                url = `https://meal-sharing-0uag.onrender.com/api/meals?title=${title}&sortKey=${key}&sortDir=${direction}`;
             }
         }
 

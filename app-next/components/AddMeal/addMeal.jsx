@@ -15,7 +15,7 @@ export default function AddingClient() {
         e.preventDefault();
         setSubmitting(true);
         try {
-            const res = await fetch("http://localhost:3001/api/meals", {
+            const res = await fetch("https://meal-sharing-0uag.onrender.com/api/meals", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
