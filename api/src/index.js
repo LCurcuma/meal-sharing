@@ -64,7 +64,7 @@ app.get("/past-meals", async (req, res) => {
 
 app.get("/all-meals", async (req, res) => {
   try {
-    const data = await knex.raw("SELECT _meal.id, _meal.title, _meal.description, _meal.location, _meal.when, _meal.max_reservations, _meal.price, _meal.created_date, COALESCE(_meal.max_reservations - SUM(_reservation.number_of_guests), _meal.max_reservations) AS available_reservations, _meal.image_url FROM _meal LEFT JOIN _reservation ON _meal.id=reservation.meal_id GROUP BY _meal.id ORDER BY _meal.id ASC");
+    const data = await knex.raw("SELECT _meal.id, _meal.title, _meal.description, _meal.location, _meal.when, _meal.max_reservations, _meal.price, _meal.created_date, COALESCE(_meal.max_reservations - SUM(_reservation.number_of_guests), _meal.max_reservations) AS available_reservations, _meal.image_url FROM _meal LEFT JOIN _reservation ON _meal.id=_reservation.meal_id GROUP BY _meal.id ORDER BY _meal.id ASC");
     const meals = await data.rows;
     if (meals.length === 0) {
       return res.status(404).json({ error: "No meals found" });
