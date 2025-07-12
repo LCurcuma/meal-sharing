@@ -17,13 +17,14 @@ reviewsRouter.use(
 
 reviewsRouter.get("/reviews", async (req, res) => {
   try {
-    const reviews = await knex.raw(
+    const data = await knex.raw(
       "SELECT * FROM _review ORDER BY id ASC;"
     );
-    if (reviews[0].length === 0) {
+    const reviews = await data.rows;
+    if (reviews.length === 0) {
       return res.status(404).json({ error: "No reviews found" });
     }
-    res.json(reviews[0]);
+    res.json(reviews);
   } catch (error) {
     console.error("Error fetching reviews:", error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -33,10 +34,11 @@ reviewsRouter.get("/reviews", async (req, res) => {
 reviewsRouter.get("/meals/:mealId/reviews", async (req, res) => {
     try{
         const mealId = req.params.mealId;
-        const reviews = await knex.raw(
+        const data = await knex.raw(
             `SELECT * FROM _review WHERE meal_id = ${mealId} ORDER BY created_date DESC;`);
-            console.log("Reviews for meal ID:", mealId, reviews[0]);
-        res.json(reviews[0]);
+            const reviews = await data.rows;
+            console.log("Reviews for meal ID:", mealId, reviews);
+        res.json(reviews);
     }   catch (error) {
     console.error("Error fetching reviews:", error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -65,13 +67,14 @@ reviewsRouter.post("/reviews", async (req, res) => {
 reviewsRouter.get("/reviews/:id", async (req, res) => {
   const reviewId = req.params.id;
   try {
-    const review = await knex.raw(
+    const data = await knex.raw(
       `SELECT * FROM _review WHERE id = ${reviewId};`
     );
-    if (review[0].length === 0) {
+    const review = await data.rows;
+    if (review.length === 0) {
       return res.status(404).json({ error: "Review not found" });
     }
-    res.json(review[0][0]);
+    res.json(review[0]);
   } catch (error) {
     console.error("Error fetching review:", error);
     res.status(500).json({ error: "Internal Server Error" });

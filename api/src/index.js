@@ -51,10 +51,11 @@ app.get("/future-meals", async (req, res) => {
 
 app.get("/past-meals", async (req, res) => {
   try {
-    const pastMeals = await knex.raw(
+    const data1 = await knex.raw(
       "SELECT * FROM _meal WHERE `when` < NOW() ORDER BY `when` ASC;"
     );
-    res.json(pastMeals[0]);
+    const pastMeals = await data1.rows;
+    res.json(pastMeals);
   } catch (error) {
     console.error("Error fetching future meals:", error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -63,7 +64,8 @@ app.get("/past-meals", async (req, res) => {
 
 app.get("/all-meals", async (req, res) => {
   try {
-    const [meals] = await knex.raw("SELECT _meal.id, _meal.title, _meal.description, _meal.location, _meal.when, _meal.max_reservations, _meal.price, _meal.created_date, COALESCE(_meal.max_reservations - SUM(_reservation.number_of_guests), _meal.max_reservations) AS available_reservations, _meal.image_url FROM _meal LEFT JOIN _reservation ON _meal.id=reservation.meal_id GROUP BY _meal.id ORDER BY _meal.id ASC");
+    const data = await knex.raw("SELECT _meal.id, _meal.title, _meal.description, _meal.location, _meal.when, _meal.max_reservations, _meal.price, _meal.created_date, COALESCE(_meal.max_reservations - SUM(_reservation.number_of_guests), _meal.max_reservations) AS available_reservations, _meal.image_url FROM _meal LEFT JOIN _reservation ON _meal.id=reservation.meal_id GROUP BY _meal.id ORDER BY _meal.id ASC");
+    const meals = await data.rows;
     if (meals.length === 0) {
       return res.status(404).json({ error: "No meals found" });
     }
@@ -76,13 +78,14 @@ app.get("/all-meals", async (req, res) => {
 
 app.get("/first-meal", async (req, res) => {
   try {
-    const firstMeal = await knex.raw(
+    const data = await knex.raw(
       "SELECT * FROM _meal ORDER BY id ASC LIMIT 1"
     );
-    if (firstMeal[0].length === 0) {
+    const firstMeal = await data.rows;
+    if (firstMeal.length === 0) {
       return res.status(404).json({ error: "No meals found" });
     }
-    res.json(firstMeal[0]);
+    res.json(firstMeal);
   } catch (error) {
     console.error("Error fetching first meal:", error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -91,13 +94,14 @@ app.get("/first-meal", async (req, res) => {
 
 app.get("/last-meal", async (req, res) => {
   try {
-    const lastMeal = await knex.raw(
+    const data = await knex.raw(
       "SELECT * FROM _meal ORDER BY id DESC LIMIT 1"
     );
-    if (lastMeal[0].length === 0) {
+    const lastMeal = await data.rows;
+    if (lastMeal.length === 0) {
       return res.status(404).json({ error: "No meals found" });
     }
-    res.json(lastMeal[0]);
+    res.json(lastMeal);
   } catch (error) {
     console.error("Error fetching last meal:", error);
     res.status(500).json({ error: "Internal Server Error" });

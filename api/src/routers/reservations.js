@@ -17,13 +17,14 @@ reservationsRouter.use(
 
 reservationsRouter.get("/reservations", async (req, res) => {
   try {
-    const reservations = await knex.raw(
+    const data = await knex.raw(
       "SELECT * FROM _reservation ORDER BY id ASC;"
     );
-    if (reservations[0].length === 0) {
+    const reservations = await data.rows;
+    if (reservations.length === 0) {
       return res.status(404).json({ error: "No reservations found" });
     }
-    res.json(reservations[0]);
+    res.json(reservations);
   } catch (error) {
     console.error("Error fetching reservations:", error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -52,13 +53,14 @@ reservationsRouter.post("/reservations", async (req, res) => {
 reservationsRouter.get("/reservations/:id", async (req, res) => {
   const reservationId = req.params.id;
   try {
-    const reservation = await knex.raw(
+    const data = await knex.raw(
       `SELECT * FROM _reservation WHERE id = ${reservationId};`
     );
-    if (reservation[0].length === 0) {
+    const reservation = await data.rows;
+    if (reservation.length === 0) {
       return res.status(404).json({ error: "Reservation not found" });
     }
-    res.json(reservation[0][0]);
+    res.json(reservation[0]);
   } catch (error) {
     console.error("Error fetching reservation:", error);
     res.status(500).json({ error: "Internal Server Error" });
