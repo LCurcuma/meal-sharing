@@ -15,7 +15,7 @@ const apiRouter = express.Router();
 apiRouter.get("/", async (req, res) => {
   const SHOW_TABLES_QUERY =
     process.env.DB_CLIENT === "pg"
-      ? "SELECT * FROM pg_catalog.pg_tables;"
+      ? "SELECT * FROM meal;"
       : "SHOW TABLES;";
   const tables = await knex.raw(SHOW_TABLES_QUERY);
   res.json({ tables });
