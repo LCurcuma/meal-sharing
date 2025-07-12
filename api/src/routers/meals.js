@@ -123,7 +123,7 @@ mealsRouter.get("/meals", async (req, res) => {
         return res.status(400).json({ error: "Invalid limit parameter" });
       }
       const data7 = await knex.raw(
-        `SELECT _meal.id, _meal.title, _meal.description, _meal.location, _meal.when, _meal.max_reservations, _meal.price, _meal.created_date, COALESCE(CAST(_meal.max_reservations AS INTEGER) - SUM(CAST(_reservation.number_of_guests AS INTEGER)), CAST(_meal.max_reservations AS INTEGER)) AS available_reservations, _meal.image_url FROM _meal, _reservation LEFT JOIN _reservation ON _meal.id::integer=reservation.meal_id::integer GROUP BY _meal.id, _meal.title, _meal.description, _meal.location, _meal.when, _meal.max_reservations, _meal.price, _meal.created_date, _meal.image_url ORDER BY _meal.id ASC LIMIT CAST(${limit} AS INTEGER);`
+        `SELECT _meal.id, _meal.title, _meal.description, _meal.location, _meal.when, _meal.max_reservations, _meal.price, _meal.created_date, COALESCE(CAST(_meal.max_reservations AS INTEGER) - SUM(CAST(r.number_of_guests AS INTEGER)), CAST(_meal.max_reservations AS INTEGER)) AS available_reservations, _meal.image_url FROM _meal, _reservation AS r LEFT JOIN r ON _meal.id::integer=r.meal_id::integer GROUP BY _meal.id, _meal.title, _meal.description, _meal.location, _meal.when, _meal.max_reservations, _meal.price, _meal.created_date, _meal.image_url ORDER BY _meal.id ASC LIMIT CAST(${limit} AS INTEGER);`
       );
       const limitedMeals = data7.rows;
       if (limitedMeals.length === 0) {
