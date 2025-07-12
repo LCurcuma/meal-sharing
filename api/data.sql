@@ -39,14 +39,14 @@ SET default_with_oids = false;
 
 CREATE TABLE public._meal (
     id smallint,
-    title character varying(255) DEFAULT NULL::character varying,
+    title character varying(38) DEFAULT NULL::character varying,
     description character varying(353) DEFAULT NULL::character varying,
-    location character varying(255) DEFAULT NULL::character varying,
-    "when" character varying(255) DEFAULT NULL::character varying,
+    location character varying(7) DEFAULT NULL::character varying,
+    "when" character varying(19) DEFAULT NULL::character varying,
     max_reservations smallint,
     price numeric(5,2) DEFAULT NULL::numeric,
-    created_date character varying(255) DEFAULT NULL::character varying,
-    image_url character varying(255) DEFAULT NULL::character varying
+    created_date character varying(19) DEFAULT NULL::character varying,
+    image_url character varying(94) DEFAULT NULL::character varying
 );
 
 
@@ -57,13 +57,13 @@ ALTER TABLE public._meal OWNER TO rebasedata;
 --
 
 CREATE TABLE public._reservation (
-    id character varying(255) DEFAULT NULL::character varying,
-    number_of_guests character varying(255) DEFAULT NULL::character varying,
-    meal_id character varying(255) DEFAULT NULL::character varying,
-    created_date character varying(255) DEFAULT NULL::character varying,
-    contact_phonenumber character varying(255) DEFAULT NULL::character varying,
-    contact_name character varying(255) DEFAULT NULL::character varying,
-    contact_email character varying(255) DEFAULT NULL::character varying
+    id character varying(1) DEFAULT NULL::character varying,
+    number_of_guests character varying(1) DEFAULT NULL::character varying,
+    meal_id character varying(1) DEFAULT NULL::character varying,
+    created_date character varying(1) DEFAULT NULL::character varying,
+    contact_phonenumber character varying(1) DEFAULT NULL::character varying,
+    contact_name character varying(1) DEFAULT NULL::character varying,
+    contact_email character varying(1) DEFAULT NULL::character varying
 );
 
 
@@ -74,34 +74,16 @@ ALTER TABLE public._reservation OWNER TO rebasedata;
 --
 
 CREATE TABLE public._review (
-    id character varying(255) DEFAULT NULL::character varying,
-    title character varying(255) DEFAULT NULL::character varying,
-    description character varying(255) DEFAULT NULL::character varying,
-    meal_id character varying(255) DEFAULT NULL::character varying,
-    stars character varying(255) DEFAULT NULL::character varying,
-    created_date character varying(255) DEFAULT NULL::character varying
+    id character varying(1) DEFAULT NULL::character varying,
+    title character varying(1) DEFAULT NULL::character varying,
+    description character varying(1) DEFAULT NULL::character varying,
+    meal_id character varying(1) DEFAULT NULL::character varying,
+    stars character varying(1) DEFAULT NULL::character varying,
+    created_date character varying(1) DEFAULT NULL::character varying
 );
 
 
 ALTER TABLE public._review OWNER TO rebasedata;
-
-ALTER TABLE _reservation
-  ALTER COLUMN id TYPE SERIAL USING id::integer,
-  ALTER COLUMN number_of_guests TYPE INTEGER USING number_of_guests::integer,
-  ALTER COLUMN meal_id TYPE INTEGER USING meal_id::integer,
-  ALTER COLUMN created_date TYPE VARCHAR(32),
-  ALTER COLUMN contact_phonenumber TYPE VARCHAR(32),
-  ALTER COLUMN contact_name TYPE VARCHAR(128),
-  ALTER COLUMN contact_email TYPE VARCHAR(128);
-
--- For _review table
-ALTER TABLE _review
-  ALTER COLUMN id TYPE SERIAL USING id::integer,
-  ALTER COLUMN title TYPE VARCHAR(128),
-  ALTER COLUMN description TYPE VARCHAR(512),
-  ALTER COLUMN meal_id TYPE INTEGER USING meal_id::integer,
-  ALTER COLUMN stars TYPE INTEGER USING stars::integer,
-  ALTER COLUMN created_date TYPE VARCHAR(32);
 
 --
 -- Data for Name: _meal; Type: TABLE DATA; Schema: public; Owner: rebasedata
@@ -143,3 +125,4 @@ COPY public._review (id, title, description, meal_id, stars, created_date) FROM 
 --
 -- PostgreSQL database dump complete
 --
+
