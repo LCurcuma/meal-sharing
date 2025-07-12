@@ -16,7 +16,7 @@ mealsRouter.use(
 
 mealsRouter.get("/meals", async (req, res) => {
   try {
-    const meals = await knex.raw("SELECT _meal.id, _meal.title, _meal.description, _meal.location, _meal.when, _meal.max_reservations, _meal.price, _meal.created_date, COALESCE(_meal.max_reservations - SUM(_reservation.number_of_guests), _meal.max_reservations) AS available_reservations, _meal.image_url FROM _meal LEFT JOIN _reservation ON _meal.id=_reservation.meal_id GROUP BY _meal.id ORDER BY _meal.id ASC");
+    const meals = await knex.raw("SELECT _meal.id, _meal.title, _meal.description, _meal.location, _meal.when, _meal.max_reservations, _meal.price, _meal.created_date, COALESCE(_meal.max_reservations - SUM(_reservation.number_of_guests), _meal.max_reservations) AS available_reservations, _meal.image_url FROM _meal LEFT JOIN _reservation ON _meal.id::integer=_reservation.meal_id::integer GROUP BY _meal.id ORDER BY _meal.id ASC");
     if (meals[0].length === 0) {
       return res.status(404).json({ error: "No meals found" });
     }
@@ -74,7 +74,7 @@ mealsRouter.get("/meals", async (req, res) => {
         return res.status(400).json({ error: "Invalid title parameter" });
       }
       const mealsByTitle = await knex.raw(
-        `SELECT _meal.id, _meal.title, _meal.description, _meal.location, _meal.when, _meal.max_reservations, _meal.price, _meal.created_date, COALESCE(_meal.max_reservations - SUM(_reservation.number_of_guests), _meal.max_reservations) AS available_reservations, _meal.image_url FROM _meal LEFT JOIN _reservation ON _meal.id=_reservation.meal_id WHERE LOWER(title) LIKE '%${title}%' GROUP BY _meal.id ORDER BY _meal.id ASC;`
+        `SELECT _meal.id, _meal.title, _meal.description, _meal.location, _meal.when, _meal.max_reservations, _meal.price, _meal.created_date, COALESCE(_meal.max_reservations - SUM(_reservation.number_of_guests), _meal.max_reservations) AS available_reservations, _meal.image_url FROM _meal LEFT JOIN _reservation ON _meal.id::integer=_reservation.meal_id::integer WHERE LOWER(title) LIKE '%${title}%' GROUP BY _meal.id ORDER BY _meal.id ASC;`
       );
       if (mealsByTitle[0].length === 0) {
         return res
@@ -116,7 +116,7 @@ mealsRouter.get("/meals", async (req, res) => {
         return res.status(400).json({ error: "Invalid limit parameter" });
       }
       const limitedMeals = await knex.raw(
-        `SELECT _meal.id, _meal.title, _meal.description, _meal.location, _meal.when, _meal.max_reservations, _meal.price, _meal.created_date, COALESCE(_meal.max_reservations - SUM(_reservation.number_of_guests), _meal.max_reservations) AS available_reservations, _meal.image_url FROM _meal LEFT JOIN _reservation ON _meal.id=reservation.meal_id GROUP BY _meal.id ORDER BY _meal.id ASC LIMIT ${limit};`
+        `SELECT _meal.id, _meal.title, _meal.description, _meal.location, _meal.when, _meal.max_reservations, _meal.price, _meal.created_date, COALESCE(_meal.max_reservations - SUM(_reservation.number_of_guests), _meal.max_reservations) AS available_reservations, _meal.image_url FROM _meal LEFT JOIN _reservation ON _meal.id::integer=reservation.meal_id::integer GROUP BY _meal.id ORDER BY _meal.id ASC LIMIT ${limit};`
       );
       if (limitedMeals[0].length === 0) {
         return res.status(404).json({ error: "No meals found" });
@@ -134,12 +134,12 @@ mealsRouter.get("/meals", async (req, res) => {
           return res.status(400).json({ error: "Invalid sortDir parameter" });
         }
         const sortedMeals = await knex.raw(
-          `SELECT _meal.id, _meal.title, _meal.description, _meal.location, _meal.when, _meal.max_reservations, _meal.price, _meal.created_date, COALESCE(_meal.max_reservations - SUM(_reservation.number_of_guests), _meal.max_reservations) AS available_reservations, _meal.image_url FROM _meal LEFT JOIN _reservation ON _meal.id=_reservation.meal_id GROUP BY _meal.id ORDER BY ${sortKey} ${req.query.sortDir.toUpperCase()};`
+          `SELECT _meal.id, _meal.title, _meal.description, _meal.location, _meal.when, _meal.max_reservations, _meal.price, _meal.created_date, COALESCE(_meal.max_reservations - SUM(_reservation.number_of_guests), _meal.max_reservations) AS available_reservations, _meal.image_url FROM _meal LEFT JOIN _reservation ON _meal.id::integer=_reservation.meal_id::integer GROUP BY _meal.id ORDER BY ${sortKey} ${req.query.sortDir.toUpperCase()};`
         );
         return res.json(sortedMeals[0]);
       }
       const sortedMeals = await knex.raw(
-        `SELECT _meal.id, _meal.title, _meal.description, _meal.location, _meal.when, _meal.max_reservations, _meal.price, _meal.created_date, COALESCE(_meal.max_reservations - SUM(_reservation.number_of_guests), _meal.max_reservations) AS available_reservations, _meal.image_url FROM _meal LEFT JOIN _reservation ON _meal.id=_reservation.meal_id GROUP BY _meal.id ORDER BY ${sortKey} ASC;`
+        `SELECT _meal.id, _meal.title, _meal.description, _meal.location, _meal.when, _meal.max_reservations, _meal.price, _meal.created_date, COALESCE(_meal.max_reservations - SUM(_reservation.number_of_guests), _meal.max_reservations) AS available_reservations, _meal.image_url FROM _meal LEFT JOIN _reservation ON _meal.id::integer=_reservation.meal_id::integer GROUP BY _meal.id ORDER BY ${sortKey} ASC;`
 
       );
       if (sortedMeals[0].length === 0) {
@@ -179,7 +179,7 @@ mealsRouter.post("/meals", async (req, res) => {
 mealsRouter.get("/meals/:id", async (req, res) => {
   const mealId = req.params.id;
   try {
-    const meal = await knex.raw(`SELECT _meal.id, _meal.title, _meal.description, _meal.location, _meal.when, _meal.max_reservations, _meal.price, _meal.created_date, COALESCE(_meal.max_reservations - SUM(_reservation.number_of_guests), _meal.max_reservations) AS available_reservations, _meal.image_url FROM _meal LEFT JOIN _reservation ON _meal.id=_reservation.meal_id WHERE _meal.id=${mealId} GROUP BY _meal.id `);
+    const meal = await knex.raw(`SELECT _meal.id, _meal.title, _meal.description, _meal.location, _meal.when, _meal.max_reservations, _meal.price, _meal.created_date, COALESCE(_meal.max_reservations - SUM(_reservation.number_of_guests), _meal.max_reservations) AS available_reservations, _meal.image_url FROM _meal LEFT JOIN _reservation ON _meal.id::integer=_reservation.meal_id::integer WHERE _meal.id=${mealId} GROUP BY _meal.id `);
     if (meal[0].length === 0) {
       return res.status(404).json({ error: "Meal not found" });
     }
