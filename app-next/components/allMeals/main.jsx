@@ -11,8 +11,6 @@ export default function Main(){
     const [meals, setMeals] = useState([]);
     const pathname = '/meals';
 
-    //doesn't work (doesn't update the meals list by filter)
-
         useEffect(() => {
             fetch("https://meal-sharing-0uag.onrender.com/api/meals?limit=3")
             .then(res => res.json())
