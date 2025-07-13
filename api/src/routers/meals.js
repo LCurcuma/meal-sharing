@@ -132,7 +132,7 @@ mealsRouter.get("/meals", async (req, res) => {
       return res.json(limitedMeals);
     } else if ("sortKey" in req.query) {
       const sortKey = req.query.sortKey.toString().toLowerCase();
-      const validSortKeys = ["`when`", "max_reservations", "price"];
+      const validSortKeys = ["when", "max_reservations", "price"];
       if (!validSortKeys.includes(sortKey)) {
         return res.status(400).json({ error: "Invalid sortKey parameter" });
       }
@@ -142,15 +142,15 @@ mealsRouter.get("/meals", async (req, res) => {
           return res.status(400).json({ error: "Invalid sortDir parameter" });
         }
         const data8 = await knex.raw(
-          `SELECT _meal.id, _meal.title, _meal.description, _meal.location, _meal.when, _meal.max_reservations, _meal.price, _meal.created_date, COALESCE(CAST(_meal.max_reservations AS INTEGER) - SUM(CAST(_reservation.number_of_guests AS INTEGER)), CAST(_meal.max_reservations AS INTEGER)) AS available_reservations, _meal.image_url FROM _meal LEFT JOIN _reservation ON _meal.id::integer=_reservation.meal_id::integer GROUP BY _meal.id, _meal.title, _meal.description, _meal.location, _meal.when, _meal.max_reservations, _meal.price, _meal.created_date, _meal.image_url ORDER BY ${sortKey} ${req.query.sortDir.toUpperCase()};`
+          `SELECT _meal.id, _meal.title, _meal.description, _meal.location, _meal.when, _meal.max_reservations, _meal.price, _meal.created_date, COALESCE(CAST(_meal.max_reservations AS INTEGER) - SUM(CAST(_reservation.number_of_guests AS INTEGER)), CAST(_meal.max_reservations AS INTEGER)) AS available_reservations, _meal.image_url FROM _meal LEFT JOIN _reservation ON _meal.id::integer=_reservation.meal_id::integer GROUP BY _meal.id, _meal.title, _meal.description, _meal.location, _meal.when, _meal.max_reservations, _meal.price, _meal.created_date, _meal.image_url ORDER BY _meal.${sortKey} ${req.query.sortDir.toUpperCase()};`
         );
         const sortedMeals = await data8.rows;
         return res.json(sortedMeals);
       }
-      const sortedMeals = await knex.raw(
-        `SELECT _meal.id, _meal.title, _meal.description, _meal.location, _meal.when, _meal.max_reservations, _meal.price, _meal.created_date, COALESCE(CAST(_meal.max_reservations AS INTEGER) - SUM(CAST(_reservation.number_of_guests AS INTEGER)), CAST(_meal.max_reservations AS INTEGER)) AS available_reservations, _meal.image_url FROM _meal LEFT JOIN _reservation ON _meal.id::integer=_reservation.meal_id::integer GROUP BY _meal.id, _meal.title, _meal.description, _meal.location, _meal.when, _meal.max_reservations, _meal.price, _meal.created_date, _meal.image_url ORDER BY ${sortKey} ASC;`
-
+      const data8 = await knex.raw(
+        `SELECT _meal.id, _meal.title, _meal.description, _meal.location, _meal.when, _meal.max_reservations, _meal.price, _meal.created_date, COALESCE(CAST(_meal.max_reservations AS INTEGER) - SUM(CAST(_reservation.number_of_guests AS INTEGER)), CAST(_meal.max_reservations AS INTEGER)) AS available_reservations, _meal.image_url FROM _meal LEFT JOIN _reservation ON _meal.id::integer=_reservation.meal_id::integer GROUP BY _meal.id, _meal.title, _meal.description, _meal.location, _meal.when, _meal.max_reservations, _meal.price, _meal.created_date, _meal.image_url ORDER BY _meal.${sortKey} ASC;`
       );
+      const sortedMeals = await data8.rows;
       if (sortedMeals.length === 0) {
         return res.status(404).json({ error: "No meals found" });
       }
