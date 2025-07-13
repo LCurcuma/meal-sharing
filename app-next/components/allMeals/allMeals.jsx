@@ -64,7 +64,7 @@ export default function AllMeals(){
         <input type="text" placeholder="Write the name of the meal" onChange={handleChange} className="input"></input>
         <select onChange={handleKeyChange} value={key} className="select">
             <option value="">default</option>
-            <option value="`when`">by date</option>
+            <option value="when">by date</option>
             <option value="max_reservations">by amount of reservations</option>
             <option value="price">by price</option>
         </select>
