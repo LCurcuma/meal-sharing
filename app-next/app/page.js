@@ -1,7 +1,7 @@
-import HomePage from "@/components/HomePage/HomePage";
+import Main from "@/components/allMeals/main";
 
 export default function Home() {
   return (
-    <HomePage />
+    <Main />
   );
 }
