@@ -17,7 +17,7 @@ export default function Card({id, title, description, location, when, maxReserva
     return (
         <div className="my-card-content" onClick={showAll}>
             <div className="availableReservationsContainer" >
-                <p className="availableReservations">Available reservations: {availableReservations}</p>
+                <p className="availableReservations">Available reservations: {parseInt(availableReservations) < 0 ? "0" : availableReservations}</p>
                 </div>
                 <div className="images-plus-description">
                 <img src={imageURL}/>

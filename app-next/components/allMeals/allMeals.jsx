@@ -81,7 +81,7 @@ export default function AllMeals(){
         </main>
         <footer>
             <p>Website was created for learning purposes</p>
-            <p>All materials were taken from channels, that you can subscribe (there are many good recipes):</p>
+            <p>All materials were taken from channels, that you can subscribe to (there are many good recipes):</p>
             <ul>
             <li><Link href="https://www.youtube.com/@SugarHighScore" className="no_decoration">Sugar High Score</Link></li>
             <li><Link href="https://www.youtube.com/@XueRen-" className="no_decoration">Xue Ren雪人</Link></li>
