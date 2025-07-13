@@ -43,7 +43,7 @@ export default function ReviewClient({ meal }) {
             <a className="header_text">Meal-sharing project</a>
         </header>
         <main>
-            <Card key={meal.id} id={meal.id} title={meal.title} description={meal.description} location={meal.location} when={meal.when} maxReservations={meal.max_reservations} price={meal.price} createdDate={meal.created_date} availableReservations={meal.available_reservations} imageURL={meal.image_url}/>
+            <Card key={meal.id} id={meal.id} title={meal.title} description={meal.description} location={meal.location} when={meal.when} maxReservations={meal.max_reservations} price={meal.price} createdDate={meal.created_date} availableReservations={parseInt(meal.available_reservations) < 0 ? "0" : meal.available_reservations} imageURL={meal.image_url}/>
                 <form onSubmit={handleSubmit}>
                     <input
                         type="text"

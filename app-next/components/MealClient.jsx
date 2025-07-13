@@ -38,17 +38,14 @@ export default function MealClient({ meal }) {
         setSubmitting(false);
     }
 
-    const availableReservations =
-        meal.max_reservations - (meal.reservations_count || 0);
-
     return (
         <>
         <header>
             <a className="header_text">Meal-sharing project</a>
         </header>
         <main>
-            <Card key={meal.id} id={meal.id} title={meal.title} description={meal.description} location={meal.location} when={meal.when} maxReservations={meal.max_reservations} price={meal.price} createdDate={meal.created_date} availableReservations={meal.available_reservations} imageURL={meal.image_url}/>
-            {availableReservations > 0 ? (
+            <Card key={meal.id} id={meal.id} title={meal.title} description={meal.description} location={meal.location} when={meal.when} maxReservations={meal.max_reservations} price={meal.price} createdDate={meal.created_date} availableReservations={parseInt(meal.available_reservations) < 0 ? "0" : meal.available_reservations} imageURL={meal.image_url}/>
+            {parseInt(meal.available_reservations) > 0 ? (
                 <form onSubmit={handleSubmit}>
                     <input
                         type="text"
