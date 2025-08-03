@@ -25,6 +25,7 @@ button{
     background-color: rgb(255, 199, 167);
     color: rgb(51, 0, 0);
     font-weight: 700;
+    cursor: pointer;
 }
 
 select{
@@ -75,4 +76,17 @@ li{
     gap: 20px;
     flex-wrap: wrap;
     justify-content: center;
+}
+
+.buttonContainer{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+    margin-bottom: 100px;
+}
+
+.containerForCards{
+    display: flex;
+    flex-flow: column;
 }
