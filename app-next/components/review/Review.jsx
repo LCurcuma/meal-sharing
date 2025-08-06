@@ -27,7 +27,7 @@ export default function ReviewClient({ meal }) {
             });
             if (res.ok) {
                 alert("Review sent!");
-                setForm({ title: "", description: "", stars: "", created_date: formatDate(Date.new()) });
+                setForm({ title: "", description: "", stars: "", created_date: formatDate(Date.now()) });
             } else {
                 alert("Sending review failed. Please try again.");
             }
