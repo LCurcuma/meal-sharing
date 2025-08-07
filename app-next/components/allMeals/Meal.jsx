@@ -3,11 +3,10 @@
 import "./allMealsStyle.css";
 import "./styles.scss";
 import React, { useState } from "react";
-import { usePathname } from "next/navigation";
 import Link from "next/link";
 
 
-export default function Card({id, title, description, location, when, maxReservations, price, createdDate}){
+export default function Card({id, title, description, location, when, maxReservations, price, createdDate, availableReservations, imageURL}){
 
     const [showDetails, setShowDetails] = useState(false);
 
@@ -16,9 +15,13 @@ export default function Card({id, title, description, location, when, maxReserva
     }
     
     return (
-        <div className="mdc-card my-card-content" onClick={showAll}>
-            <div className="mdc-card__primary-action" >
-                <img src="https://www.dish-works.com/wp-content/uploads/bb-plugin/cache/Hatch-Chile-Chilaquiles_shot-1-square-7a40679e66b01fbfcde6429f39d329eb-ulojni6d457q.jpg"/>
+        <div className="my-card-content" onClick={showAll}>
+            <div className="availableReservationsContainer">
+                <p className="availableReservations">Available reservations: {parseInt(availableReservations) < 0 ? "0" : availableReservations}</p>
+                </div>
+                <div className="images-plus-description">
+                <img src={imageURL}/>
+                <div className="main_content">
                 <h2>{title}</h2>
                 <p>{description}</p>
                 {showDetails && ( 
@@ -28,11 +31,14 @@ export default function Card({id, title, description, location, when, maxReserva
                 <p>Max reservations: {maxReservations}</p>
                 <p>Price: {price}</p>
                 <p>Created: {createdDate}</p>
-                <Link href={'/'+id}><button>Reserv meal</button></Link>
-                <Link href={'/review/'+id}><button>Review meal</button></Link>
+                <div className="btns">
+                <Link href={'/meals/'+id} className="no_decoration"><button className="btn">Make reservation</button></Link>
+                <Link href={'/meals/review/'+id} className="no_decoration"><button className="btn">Review meal</button></Link>
+                </div>
                 </div>
                 )}
+                </div>
+                </div>
             </div>
-        </div>
     )
 }

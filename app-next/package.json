@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@material/card": "^14.0.0",
+    "@netlify/next": "^1.4.9",
     "next": "^15.3.5",
     "react": "^18",
     "react-dom": "^18",
