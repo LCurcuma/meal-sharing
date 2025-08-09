@@ -1,0 +1,48 @@
+@font-face {
+    font-family: "mainFont";
+    src: url("../allMeals/AnnieUseYourTelescope-Regular.ttf");
+}
+
+.p_review{
+    font-family: mainFont;
+    margin-left: 100px;
+    font-size: 30px;
+    font-weight: 700;
+    color: #742300;
+}
+
+.static{
+    position:fixed;
+    right: 50px;
+    bottom: 20px;
+}
+
+.form{
+    width: 90%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.btn_round{
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 50px;
+    height: 100px;
+    width: 250px;
+    justify-content: center;
+    align-items: center;
+    border: transparent;
+    cursor: pointer;
+    color: #742300;
+    font-size: 25px;
+    font-weight: 600;
+    font-family: "mainFont";
+    border-radius: 100px;
+    width: 100px;
+    background-color: #FFB3B3;
+}
+
+.btn_round:hover{
+    background-color: #ffc7c7;
+}

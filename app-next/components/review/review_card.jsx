@@ -16,7 +16,7 @@ export default function ReviewCard({title, description, stars, createdDate}){
         <div className="my-card-content" onClick={showAll}>
                 <div className="images-plus-description">
                 <div className="main_content">
-                    <p>Stars: {stars}</p>
+                <p>Stars: {stars}</p>
                 <h2>{title}</h2>
                 <p>{description}</p>
                 <p>Created: {createdDate}</p>
