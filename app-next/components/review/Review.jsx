@@ -1,13 +1,23 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import '../allMeals/allMealsStyle.css'
 import formatDate from "@/utils/formatData";
 import Card from "../allMeals/MealReservation";
 import Link from "next/link";
+import ReviewCard from "./review_card";
 
 export default function ReviewClient({ meal }) {
     const [form, setForm] = useState({ title: "", description: "", stars: "", created_date: formatDate(Date.now()) });
     const [submitting, setSubmitting] = useState(false);
+    const [reviewsData, setReviewsData] = useState([]);
+
+    const mealId = meal.id;
+    useEffect(() => {
+        const url = `https://meal-sharing-0uag.onrender.com/api/meals/${mealId}/reviews`;
+        fetch(url)
+        .then(res => res.json())
+        .then(setReviewsData);
+    }, []);
 
     function handleChange(e) {
         setForm({ ...form, [e.target.name]: e.target.value });
@@ -77,6 +87,12 @@ export default function ReviewClient({ meal }) {
                     </button>
                     <Link href="/meals" className="no_decoration"><button className="btn_back">Back</button></Link>
                 </form>
+                <p>Reviews from users</p>
+                        <div className="container">
+                        {(Array.isArray(reviewsData) ? reviewsData : [])?.map(review => (
+                            <ReviewCard key={review.id} title={review.title} description={review.description} stars={review.stars} createdDate={review.created_date}/>
+                        ))}
+                        </div>
         </main>
         <footer className="footer_without_content"></footer>
         </>

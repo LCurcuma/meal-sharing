@@ -35,7 +35,7 @@ reviewsRouter.get("/meals/:mealId/reviews", async (req, res) => {
     try{
         const mealId = req.params.mealId;
         const data = await knex.raw(
-            `SELECT * FROM _review WHERE meal_id = ${mealId} ORDER BY created_date DESC;`);
+            `SELECT * FROM _review WHERE meal_id::integer = ${mealId} ORDER BY created_date DESC;`);
             const reviews = await data.rows;
             console.log("Reviews for meal ID:", mealId, reviews);
         res.json(reviews);
